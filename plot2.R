@@ -1,0 +1,10 @@
+two_day<-read.table("household_power_consumption.txt", skip=66637, nrows=2880, sep=";")
+header <- read.table("household_power_consumption.txt", nrows=1,sep=";", stringsAsFactors = FALSE)
+colnames(two_day) <- as.character(header[1,])
+
+png(filename = "plot2.png", width = 480, height = 480, units="px")
+two_day$POSIXdt <- paste(two_day$Date, two_day$Time)
+two_day$POSIXdt <- strptime(two_day$POSIXdt, format="%d/%m/%Y %H:%M:%S")
+plot(two_day$POSIXdt, two_day$Global_active_power, type="n", xlab = "", ylab = "Global Active Power (kilowatts)")
+lines(two_day$POSIXdt, two_day$Global_active_power)
+dev.off()
